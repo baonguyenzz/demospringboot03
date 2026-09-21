@@ -1,4 +1,14 @@
 spring:
   application:
     name: demospringboot03
-server.port: 8080
+  datasource:
+    url: jdbc:mysql://localhost:3307/crm_app
+    username: root
+    password: 123456
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+server:
+  port: 8080

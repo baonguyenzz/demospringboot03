@@ -1,5 +1,8 @@
 package com.cybersoft.demospringboot03.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.cybersoft.demospringboot03.entity.Student;
+import com.cybersoft.demospringboot03.entity.UsersEntity;
 import com.cybersoft.demospringboot03.payload.request.LoginRequest;
+import com.cybersoft.demospringboot03.repository.UsersRepository;
 
 /**
  * @RestController (@Controller + @ResponseBody): dùng để định nghĩa đường dẫn
@@ -33,6 +40,12 @@ public class HelloController {
      * @return
      */
 
+    @Autowired
+    private Student student; // IOC
+
+    @Autowired
+    private UsersRepository usersRepository;
+
     @GetMapping("")
 
     /**
@@ -42,8 +55,10 @@ public class HelloController {
      * @param name
      * @return
      */
-    public String hello(@RequestParam(required = false) String name, @RequestParam int age) {
-        return "Hello Spring Booooooooot" + name + " - tuoi: " + age;
+    public ResponseEntity<?> hello() {
+        // List<UsersEntity> list = usersRepository.findAll();
+        UsersEntity user = usersRepository.findByEmail("tranvanc@gmail.com");
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping("/cybersoft")
